@@ -1,0 +1,63 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%}Detect{% endblock %}
+
+{% block content %}
+
+<div>
+    <p>
+    <h2>Perform Registration Plate Detection</h2>
+    </p>
+
+    <!--  Form prompt to user to upload file for detection  -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="videoFile" accept="video/*">
+        <input type="submit" class="btn btn-primary" value="Perform Vehicle Registration Detection">
+    </form>
+
+    <br>
+    <br>
+
+    <!--    Link to previous detection results -->
+    <a href="/detect-result">View Previous Detection Results</a>
+    <br>
+
+    <!--    Link to previous report generated-->
+    <a href="/report">View Previous Detection Report</a>
+
+
+
+</div>
+
+
+<script>
+      const uploadButton = document.querySelector('button[type="submit"]');
+      const inputFile = document.querySelector('input[type="file"]');
+
+      uploadButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('videoFile', inputFile.files[0]);
+
+        try {
+          const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (response.ok) {
+            console.log('Detection completed.');
+          } else {
+            console.error('Detection failed.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      });
+
+</script>
+
+{% endblock %}

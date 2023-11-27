@@ -1,0 +1,28 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%}Report{% endblock %}
+
+{% block content %}
+
+<div>
+    <p>
+    <h2>Generated Report from Detection</h2>
+    </p>
+
+
+    <!--  Display generated report  -->
+    <ul>
+        {% for message in info %}
+            <li> {{ message }}</li>
+        {% endfor %}
+    </ul>
+
+
+</div>
+
+<script>
+
+</script>
+{% endblock %}

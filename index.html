@@ -1,0 +1,103 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%}Vehicle Database{% endblock %}
+
+{% block content %}
+
+<div>
+    <p>
+    <h2>Registered Vehicles Database</h2>
+    </p>
+
+    <!--  Buttons to direct user to register vehicle page OR remove selected records  -->
+    <div class="text-left mt-3">
+        <a href="{{ url_for('view.registerVehicle') }}" class="btn btn-primary">Authorise New Vehicle</a>
+        <button class="btn btn-danger" onclick="removeSelectedVehicles()">Remove Selection</button>
+    </div>
+
+    <br>
+
+    <!--    Search Bar    -->
+    <div class="input-group mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search Records...">
+    </div>
+
+    <!--    platesAuthorised table   -->
+    <table class="table table-bordered table-hover mt3" id="dataTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Registration Number</th>
+                <th>Forename</th>
+                <th>Surname</th>
+                <th>Type</th>
+                <th>Date Added</th>
+                <th>Vehicle Make</th>
+                <th>Vehicle Colour</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td><input type="checkbox" name="selectedVehicles" value="{{ row[0] }}"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+    <!-- Function to filter the table based on the search input  -->
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#dataTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function removeSelectedVehicles() {
+        if (confirm("WARNING. All selected vehicles wil be deleted.")) {
+            // Grab selected checkboxes
+            var selectedCheckboxes = $("input[name='selectedVehicles']:checked");
+            var selectedPlates = [];
+
+            // Extract plate numbers of selected records
+            selectedCheckboxes.each(function () {
+                selectedPlates.push($(this).val());
+            });
+
+            // AJAX request to remove selected records from database
+            $.ajax({
+                type: "POST",
+                url: "/remove-vehicle",
+                data: JSON.stringify({ "selectedPlates": selectedPlates }),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response);  // Success message displayed in console
+                    window.location.reload();   // Reload page and update table
+                },
+                error: function (xhr, status, error) {
+                    console.log(error); // Error message displayed in console
+                }
+            });
+        }
+    }
+</script>
+
+
+{% endblock %}

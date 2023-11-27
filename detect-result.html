@@ -1,0 +1,54 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%}Detection Results{% endblock %}
+
+{% block content %}
+
+<div>
+    <p>
+    <h2>Detection Results</h2>
+    </p>
+
+    <!--    Link to previous report generated -->
+    <a href="/report">Generate Detection Report</a>
+    <br>
+
+    <!--    Search Bar    -->
+    <div class="input-group mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search Records...">
+    </div>
+
+    <!--  Display detected plates and score in table  -->
+    <table class="table table-bordered table-hover mt3" id="dataTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Registration Number</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plate in data %}
+            <tr>
+                <td>{{ plate[0] }}</td>
+                <td>{{ plate[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+    <!-- Function to filter the table based on the search input  -->
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#dataTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%} Register Credentials {% endblock %}
+
+{% block content %}
+
+<form method="POST">
+
+    <div>
+
+        <p>
+        <h2 align="left">Register Credentials</h2>
+        </p>
+
+        <div class="form-group">
+            <label for="forename">Forename</label>
+            <input type="text" class="form-control form-control-sm" id="forename" name="forename" placeholder="Enter forename">
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" class="form-control form-control-sm" id="surname" name="surname" placeholder="Enter surname">
+        </div>
+
+        <div class="form-group">
+            <label for="email1">Email Address</label>
+            <input type="email" class="form-control form-control-sm" id="email1" name="email1" placeholder="Enter email address">
+        </div>
+
+        <div class="form-group">
+            <label for="email2">Confirm Email Address</label>
+            <input type="email" class="form-control form-control-sm" id="email2" name="email2" placeholder="Confirm email address">
+        </div>
+
+        <div class="form-group">
+            <label for="userkey">UserKey</label>
+            <input type="text" class="form-control form-control-sm" id="userkey" name="userkey" placeholder="Create UserKey (username)">
+        </div>
+
+        <div class="form-group">
+            <label for="password1">PIN</label>
+            <input type="password" class="form-control form-control-sm" id="password1" name="password1" placeholder="Create 4-digit PIN">
+        </div>
+
+        <div class="form-group">
+            <label for="password2"> Confirm PIN</label>
+            <input type="password" class="form-control form-control-sm" id="password2" name="password2" placeholder="Confirm PIN">
+        </div>
+
+        <br />
+
+        <button type="submit" class="btn btn-outline-success">Complete Registration</button>
+
+    </div>
+
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+<!-- Inherits template from base.html file -->
+
+{% extends "base.html" %}
+
+{% block title%}Action Required{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    <h2 align="left">Enter Credentials for Access</h2>
+
+    <div class="form-group">
+        <label for="userkey">UserKey</label>
+        <input type="text" class="form-control" id="userkey" name="userkey" placeholder="UserKey">
+    </div>
+
+    <div class="form-group">
+        <label for="password">PIN</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="PIN">
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-outline-success">Enter System</button>
+
+</form>
+
+{% endblock %}
